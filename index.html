@@ -219,7 +219,7 @@
   .langs small { display: block; color: var(--muted); font-size: 12.5px; line-height: 1.3; }
   .bar { height: 3px; background: rgba(58,61,74,.18); position: relative; }
   .bar i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--ink); width: var(--w); transform-origin: left; transform: scaleX(0); transition: transform 1s cubic-bezier(.2,.7,.2,1) .3s; }
-  .ready .bar i { transform: scaleX(1); }
+  .langs li.in .bar i { transform: scaleX(1); }
 
   /* checklist */
   .checks { list-style: none; margin: 0; padding: 0; font-size: 15px; }
@@ -300,12 +300,104 @@
     margin-right: -56px;
   }
 
-  /* reveal */
-  .reveal { opacity: 0; transform: translateY(14px); transition: opacity .7s ease, transform .7s ease; }
-  .reveal.in { opacity: 1; transform: none; }
+  /* ---------- MOTION ---------- */
+  :root {
+    --ease: cubic-bezier(.22, .8, .2, 1);
+    --ease-spring: cubic-bezier(.34, 1.4, .5, 1);
+  }
+
+  /* hero: slow drifting light */
+  header.hero { overflow: hidden; }
+  header.hero::after {
+    content: "";
+    position: absolute;
+    inset: -40%;
+    background: radial-gradient(closest-side, rgba(255,255,255,.07), transparent 70%);
+    width: 70%; height: 140%;
+    left: 30%;
+    pointer-events: none;
+    animation: drift 16s ease-in-out infinite alternate;
+  }
+  @keyframes drift {
+    from { transform: translate(-12%, -8%); }
+    to   { transform: translate(18%, 10%); }
+  }
+  .hero-text { position: relative; z-index: 1; }
+
+  /* hero: load sequence */
+  .hero h1 { overflow: hidden; padding-bottom: .08em; }
+  .hero h1 > span { display: block; transform: translateY(110%); transition: transform 1.1s var(--ease) .15s; }
+  .hero .tagline, .hero .now, .lang-switch { opacity: 0; transform: translateY(10px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+  .hero .tagline { transition-delay: .55s; }
+  .hero .now { transition-delay: .75s; }
+  .lang-switch { transition-delay: .9s; }
+  .is-loaded .hero h1 > span,
+  .is-loaded .hero .tagline,
+  .is-loaded .hero .now,
+  .is-loaded .lang-switch { transform: none; opacity: 1; }
+
+  /* portrait: curtain reveal */
+  .portrait { opacity: 0; transform: translateY(24px); transition: opacity .9s var(--ease) .25s, transform 1.1s var(--ease) .25s; }
+  .portrait .inner { clip-path: inset(100% 0 0 0 round 116px); transition: clip-path 1.2s var(--ease) .45s; }
+  .portrait img, .portrait .initials { transform: scale(1.14); transition: transform 1.8s var(--ease) .45s; }
+  .is-loaded .portrait { opacity: 1; transform: none; }
+  .is-loaded .portrait .inner { clip-path: inset(0 0 0 0 round 116px); }
+  .is-loaded .portrait img, .is-loaded .portrait .initials { transform: scale(1); }
+
+  /* sliding language pill */
+  .lang-switch .pill {
+    position: absolute;
+    top: 4px; bottom: 4px; left: 4px;
+    width: calc(50% - 4px);
+    background: #fff;
+    border-radius: var(--radius);
+    transition: transform .45s var(--ease);
+  }
+  html[lang="ko"] .lang-switch .pill { transform: translateX(100%); }
+  .lang-switch button { position: relative; z-index: 1; min-width: 54px; background: transparent !important; transition: color .35s, opacity .2s; }
+  .lang-switch button[aria-pressed="true"] { color: var(--ink); }
+
+  /* language change: quick crossfade */
+  .hero-text, .body { transition: opacity .22s ease, filter .22s ease; }
+  .switching .hero-text, .switching .body { opacity: 0; filter: blur(3px); }
+
+  /* scroll reveals (JS adds .rv to targets, staggered per batch) */
+  .rv { opacity: 0; transform: translateY(16px); transition: opacity .8s var(--ease), transform .8s var(--ease); transition-delay: var(--d, 0s); }
+  .rv.in { opacity: 1; transform: none; }
+
+  /* heading icons pop in */
+  .h .ic { transform: scale(.3) rotate(-40deg); opacity: 0; transition: transform .7s var(--ease-spring), opacity .4s ease; transition-delay: calc(var(--d, 0s) + .1s); }
+  .h.in .ic { transform: none; opacity: 1; }
+
+  /* timeline: line draws, dot pops */
+  .job { border-left-color: transparent; }
+  .job::after {
+    content: "";
+    position: absolute; left: -2px; top: 0; bottom: 0; width: 2px;
+    background: var(--line);
+    transform: scaleY(0); transform-origin: top;
+    transition: transform 1.1s var(--ease);
+    transition-delay: calc(var(--d, 0s) + .15s);
+  }
+  .job::before { z-index: 1; transform: scale(0); transition: transform .6s var(--ease-spring), background .3s; transition-delay: var(--d, 0s); }
+  .job.in::after { transform: scaleY(1); }
+  .job.in::before { transform: scale(1); }
+  .job:hover::before { background: var(--ink); }
+
+  /* metrics */
+  .metric { transition: opacity .8s var(--ease), transform .8s var(--ease), box-shadow .3s ease; }
+  .metric b { font-variant-numeric: tabular-nums; }
+  .metric:hover { box-shadow: inset 0 -3px 0 var(--ink); }
+
+  /* underline sweep for links */
+  .contact a { border-bottom: 0; background: linear-gradient(var(--ink), var(--ink)) 0 100% / 0 1px no-repeat, linear-gradient(rgba(58,61,74,.3), rgba(58,61,74,.3)) 0 100% / 100% 1px no-repeat; transition: background-size .45s var(--ease); }
+  .contact a:hover { background-size: 100% 1px, 100% 1px; }
+
   @media (prefers-reduced-motion: reduce) {
-    .reveal { opacity: 1; transform: none; transition: none; }
-    .bar i { transition: none; }
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+    .rv, .hero h1 > span, .hero .tagline, .hero .now, .lang-switch, .portrait, .h .ic { opacity: 1 !important; transform: none !important; }
+    .portrait .inner { clip-path: none !important; }
+    .portrait img, .portrait .initials, .job::before, .job::after, .bar i { transform: none !important; }
   }
 
   /* ---------- RESPONSIVE ---------- */
@@ -335,8 +427,10 @@
     body { background: #fff; }
     .sheet { margin: 0; box-shadow: none; max-width: none; }
     .lang-switch { display: none; }
-    .reveal { opacity: 1; transform: none; }
-    .bar i { transform: none; }
+    .rv, .hero h1 > span, .hero .tagline, .hero .now, .portrait, .h .ic { opacity: 1 !important; transform: none !important; transition: none !important; }
+    .portrait .inner { clip-path: none !important; }
+    .portrait img, .portrait .initials, .job::before, .job::after, .bar i { transform: none !important; }
+    header.hero::after { display: none; }
   }
 </style>
 </head>
@@ -360,6 +454,7 @@
       </div>
     </div>
     <div class="lang-switch" role="group" aria-label="Language">
+      <span class="pill" aria-hidden="true"></span>
       <button type="button" data-set-lang="en" aria-pressed="true">EN</button>
       <button type="button" data-set-lang="ko" aria-pressed="false">KO</button>
     </div>
@@ -376,7 +471,7 @@
         </div>
       </div>
 
-      <section class="reveal">
+      <section>
         <h2 class="h">
           <span class="ic"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z" opacity="0"/><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
           <span data-lang="en">Contact</span><span data-lang="ko">연락처</span>
@@ -391,7 +486,7 @@
         </ul>
       </section>
 
-      <section class="reveal">
+      <section>
         <h2 class="h">
           <span class="ic"><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></span>
           <span data-lang="en">Languages</span><span data-lang="ko">언어</span>
@@ -410,7 +505,7 @@
         </ul>
       </section>
 
-      <section class="reveal">
+      <section>
         <h2 class="h">
           <span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></span>
           <span data-lang="en">Expertise</span><span data-lang="ko">핵심 역량</span>
@@ -442,7 +537,7 @@
 
     <!-- ============ MAIN ============ -->
     <main class="main">
-      <section class="summary reveal">
+      <section class="summary">
         <h2 class="h">
           <span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>
           <span data-lang="en">Summary</span><span data-lang="ko">소개</span>
@@ -468,7 +563,7 @@
         </div>
       </section>
 
-      <section class="reveal">
+      <section>
         <h2 class="h">
           <span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></svg></span>
           <span data-lang="en">Experience</span><span data-lang="ko">경력</span>
@@ -545,7 +640,7 @@
         </article>
       </section>
 
-      <section class="reveal">
+      <section>
         <h2 class="h">
           <span class="ic"><svg viewBox="0 0 24 24"><path d="M2 9 12 4l10 5-10 5z"/><path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5M22 9v6"/></svg></span>
           <span data-lang="en">Education</span><span data-lang="ko">학력</span>
@@ -568,7 +663,7 @@
         </div>
       </section>
 
-      <section class="reveal">
+      <section>
         <h2 class="h">
           <span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="m8.5 14-1.5 7 5-3 5 3-1.5-7"/></svg></span>
           <span data-lang="en">Recognition &amp; Certifications</span><span data-lang="ko">수상 &amp; 자격</span>
@@ -618,23 +713,64 @@
     if (!initial) initial = (navigator.language || "").toLowerCase().indexOf("ko") === 0 ? "ko" : "en";
     setLang(initial);
 
+    var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
     document.querySelectorAll("[data-set-lang]").forEach(function (b) {
-      b.addEventListener("click", function () { setLang(b.dataset.setLang); });
+      b.addEventListener("click", function () {
+        var lang = b.dataset.setLang;
+        if (lang === root.lang) return;
+        if (reduced) { setLang(lang); return; }
+        root.classList.add("switching");
+        setTimeout(function () {
+          setLang(lang);
+          requestAnimationFrame(function () { root.classList.remove("switching"); });
+        }, 220);
+      });
     });
 
-    // scroll reveal
-    var items = document.querySelectorAll(".reveal");
-    if ("IntersectionObserver" in window) {
-      var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) {
-          if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
-        });
-      }, { threshold: 0.12 });
-      items.forEach(function (el) { io.observe(el); });
-    } else {
-      items.forEach(function (el) { el.classList.add("in"); });
+    // hero load sequence
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () { root.classList.add("is-loaded"); });
+    });
+
+    // count-up for metrics: "+18%", "1,150+", "+12pt", "10+"
+    function countUp(el) {
+      var m = el.textContent.match(/^([^\d]*)([\d,]+)(.*)$/);
+      if (!m || reduced) return;
+      var target = parseInt(m[2].replace(/,/g, ""), 10), comma = m[2].indexOf(",") > -1;
+      var start = null, dur = 1400;
+      function frame(t) {
+        if (start === null) start = t;
+        var p = Math.min((t - start) / dur, 1), eased = 1 - Math.pow(1 - p, 4);
+        var v = Math.round(target * eased);
+        el.textContent = m[1] + (comma ? v.toLocaleString("en-US") : v) + m[3];
+        if (p < 1) requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
     }
-    requestAnimationFrame(function () { document.body.classList.add("ready"); });
+
+    // staggered scroll reveals
+    var targets = document.querySelectorAll(
+      ".h, .summary p, .metric, .job, .edu-item, .rec li, .contact li, .langs li, .checks li, .side-foot"
+    );
+    targets.forEach(function (el) { el.classList.add("rv"); });
+
+    function reveal(el, i) {
+      el.style.setProperty("--d", (i * 0.07) + "s");
+      el.classList.add("in");
+      if (el.classList.contains("metric")) setTimeout(function () { countUp(el.querySelector("b")); }, i * 70 + 150);
+    }
+
+    if ("IntersectionObserver" in window && !reduced) {
+      var io = new IntersectionObserver(function (entries) {
+        var batch = entries.filter(function (e) { return e.isIntersecting; })
+          .sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top || a.boundingClientRect.left - b.boundingClientRect.left; });
+        batch.forEach(function (e, i) { reveal(e.target, i); io.unobserve(e.target); });
+      }, { threshold: 0.15, rootMargin: "0px 0px -6% 0px" });
+      targets.forEach(function (el) { io.observe(el); });
+    } else {
+      targets.forEach(function (el) { el.classList.add("in"); });
+    }
   })();
 </script>
 </body>
