@@ -271,6 +271,9 @@
   .job .date { font-size: 13.5px; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
   .job .role { margin: 2px 0 10px; font-size: 15px; font-weight: 600; font-style: italic; color: #4a4d5a; }
   html[lang="ko"] .job .role { font-style: normal; }
+  .ext { color: var(--ink-2); text-decoration: none; white-space: nowrap; background: linear-gradient(var(--ink), var(--ink)) 0 100% / 100% 1px no-repeat; padding-bottom: 1px; transition: background-size .35s var(--ease, ease); }
+  .ext svg { width: .8em; height: .8em; margin-left: 3px; vertical-align: -.05em; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; transition: transform .3s var(--ease, ease); }
+  .ext:hover svg { transform: translate(2px, -2px); }
   .job ul { margin: 0; padding: 0; list-style: none; }
   .job li { position: relative; padding-left: 18px; margin-bottom: 7px; font-size: 15px; line-height: 1.55; color: #3a3c44; }
   .job li::before { content: ""; position: absolute; left: 2px; top: 9px; width: 6px; height: 6px; background: var(--ink); }
@@ -574,7 +577,7 @@
             <h3>Bellatrix <span class="where">· <span data-lang="en">Korea</span><span data-lang="ko">한국</span></span></h3>
             <span class="date"><span data-lang="en">Aug 2026 – Present</span><span data-lang="ko">2026.08 – 현재</span></span>
           </div>
-          <p class="role"><span data-lang="en">Founder &amp; CEO, ShyftStarter</span><span data-lang="ko">ShyftStarter 창업자 &amp; CEO</span></p>
+          <p class="role"><span data-lang="en">Founder &amp; CEO, <a class="ext" href="https://shyftstarter.com" target="_blank" rel="noopener">ShyftStarter<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></span><span data-lang="ko"><a class="ext" href="https://shyftstarter.com" target="_blank" rel="noopener">ShyftStarter<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a> 창업자 &amp; CEO</span></p>
           <ul data-lang="en">
             <li><strong>Product &amp; AI Strategy:</strong> Building ShyftStarter, an AI-powered frontline performance platform that turns business priorities and performance signals into personalised, shift-level actions for frontline teams.</li>
             <li><strong>Performance Intelligence:</strong> Designed a behaviour-to-performance framework connecting business KPIs with employee quests, micro-checklists, AI nudges, coaching and learning interventions.</li>
