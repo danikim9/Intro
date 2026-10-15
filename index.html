@@ -245,14 +245,14 @@
 
   /* metrics */
   .metrics {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    display: flex;
+    flex-wrap: wrap;
     gap: 1px;
     background: var(--line);
     border: 1px solid var(--line);
     margin-top: 26px;
   }
-  .metric { background: #fff; padding: 18px 16px; }
+  .metric { flex: 1 1 108px; background: #fff; padding: 18px 14px; }
   .metric b { display: block; font-size: 28px; font-weight: 800; color: var(--ink); line-height: 1.1; letter-spacing: -.01em; }
   .metric span { display: block; font-size: 13px; color: var(--muted); margin-top: 6px; line-height: 1.35; }
 
@@ -404,7 +404,6 @@
   @media (max-width: 1000px) {
     header.hero, .body { grid-template-columns: 300px 1fr; }
     .portrait { width: 220px; height: 290px; margin-top: -230px; }
-    .metrics { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 760px) {
     .sheet { margin: 0; box-shadow: none; }
@@ -557,8 +556,9 @@
         </p>
         <div class="metrics">
           <div class="metric"><b>+18%</b><span data-lang="en">Conversion (CVR) uplift at Apple</span><span data-lang="ko">Apple 전환율(CVR) 상승</span></div>
+          <div class="metric"><b>+12pt</b><span data-lang="en">NPS improvement at Apple</span><span data-lang="ko">Apple NPS 향상</span></div>
           <div class="metric"><b>120+</b><span data-lang="en">B2B accounts managed at Apple</span><span data-lang="ko">Apple B2B 고객사 관리</span></div>
-          <div class="metric"><b>10</b><span data-lang="en">Cities in 4 countries trained (Samsung)</span><span data-lang="ko">4개국 10개 도시 교육 (삼성)</span></div>
+          <div class="metric"><b>12</b><span data-lang="en">Cities across 6 countries for store openings &amp; training</span><span data-lang="ko">6개국 12개 도시 오픈·교육</span></div>
           <div class="metric"><b>1,150+</b><span data-lang="en">Executive presentations delivered</span><span data-lang="ko">임원·VIP 대상 프레젠테이션</span></div>
         </div>
       </section>
@@ -614,14 +614,14 @@
           </div>
           <p class="role"><span data-lang="en">Creative Pro · Global New Store Opening Mentor, APAC · NCO Trainer (Malaysia)</span><span data-lang="ko">Creative Pro · APAC 글로벌 신규 매장 오픈(NSO) 멘토 · 신규 국가 오픈(NCO) 트레이너 (말레이시아)</span></p>
           <ul data-lang="en">
-            <li><strong>APAC Leadership:</strong> Selected as one of 8 APAC NSO Mentors supporting new store and new country openings — team integration, leadership readiness and consistent execution of global retail standards.</li>
+            <li><strong>APAC Leadership:</strong> Selected as one of 8 APAC NSO Mentors supporting new store and new country openings in Seoul (Korea) and Kuala Lumpur (Malaysia) — team integration, leadership readiness and consistent execution of global retail standards.</li>
             <li><strong>New Country Opening:</strong> Supported the launch of Apple’s first retail store in Malaysia as an NCO Trainer, turning global HQ frameworks into local team readiness while coordinating cross-functional stakeholders.</li>
             <li><strong>Operational Readiness:</strong> Localised and delivered global training frameworks for large-scale openings, achieving 99% operational readiness while upholding customer experience and brand standards.</li>
             <li><strong>Sales Management &amp; Customer Experience:</strong> Managed store sales performance through KPI tracking and in-the-moment coaching, delivering a +18% conversion (CVR) uplift and a +12pt NPS improvement.</li>
             <li><strong>B2B Account Management:</strong> Managed a portfolio of 120+ B2B accounts, building long-term client relationships and identifying growth opportunities with business customers.</li>
           </ul>
           <ul data-lang="ko">
-            <li><strong>APAC 리더십:</strong> APAC 지역 NSO 멘토 8인 중 한 명으로 선발되어 신규 매장 및 신규 국가 오픈을 지원했습니다. 팀 통합, 리더십 준비도, 글로벌 리테일 스탠다드의 일관된 실행에 집중했습니다.</li>
+            <li><strong>APAC 리더십:</strong> APAC 지역 NSO 멘토 8인 중 한 명으로 선발되어 서울(한국)과 쿠알라룸푸르(말레이시아)의 신규 매장 및 신규 국가 오픈을 지원했습니다. 팀 통합, 리더십 준비도, 글로벌 리테일 스탠다드의 일관된 실행에 집중했습니다.</li>
             <li><strong>신규 국가 오픈:</strong> NCO 트레이너로서 말레이시아 최초의 Apple 리테일 스토어 런칭을 지원했으며, 본사 글로벌 프레임워크를 현지 팀의 실행 역량으로 연결하고 유관 부서 간 협업을 조율했습니다.</li>
             <li><strong>운영 준비도:</strong> 대규모 오픈을 위한 글로벌 교육 프레임워크를 현지화·운영하여, 고객 경험과 브랜드 기준을 유지하면서 99%의 운영 준비도를 달성했습니다.</li>
             <li><strong>영업 관리 &amp; 고객 경험 개선:</strong> KPI 기반 실적 관리와 현장 코칭으로 매장 영업 성과를 관리하여 전환율(CVR) +18% 상승과 NPS +12pt 향상을 이끌었습니다.</li>
@@ -739,7 +739,7 @@
       requestAnimationFrame(function () { root.classList.add("is-loaded"); });
     });
 
-    // count-up for metrics: "+18%", "120+", "10", "1,150+"
+    // count-up for metrics: "+18%", "120+", "+12pt", "12", "1,150+"
     function countUp(el) {
       var m = el.textContent.match(/^([^\d]*)([\d,]+)(.*)$/);
       if (!m || reduced) return;
