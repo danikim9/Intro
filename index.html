@@ -93,6 +93,10 @@
     border-radius: var(--radius);
     font-size: 14px;
   }
+  .now-link { color: #fff; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.45); transition: border-color .25s; }
+  .now-link:hover { border-color: #fff; }
+  .now-link svg { width: .8em; height: .8em; margin-left: 3px; vertical-align: -.05em; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; transition: transform .3s ease; }
+  .now-link:hover svg { transform: translate(2px, -2px); }
   .hero .now::before {
     content: "";
     width: 8px; height: 8px; border-radius: 50%;
@@ -451,8 +455,8 @@
         <span data-lang="ko">리테일 트랜스포메이션 · 글로벌 확장 · AI &amp; 퍼포먼스 전략</span>
       </p>
       <div class="now">
-        <span data-lang="en">Now building <strong>ShyftStarter</strong> — Founder &amp; CEO</span>
-        <span data-lang="ko"><strong>ShyftStarter</strong> 창업자 &amp; CEO</span>
+        <span data-lang="en">Now building <a class="now-link" href="https://shyftstarter.com" target="_blank" rel="noopener"><strong>ShyftStarter</strong><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a> — Founder &amp; CEO</span>
+        <span data-lang="ko"><a class="now-link" href="https://shyftstarter.com" target="_blank" rel="noopener"><strong>ShyftStarter</strong><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a> 창업자 &amp; CEO</span>
       </div>
     </div>
     <div class="lang-switch" role="group" aria-label="Language">
@@ -545,14 +549,14 @@
           <span data-lang="en">Summary</span><span data-lang="ko">소개</span>
         </h2>
         <p data-lang="en">
-          Retail operations and transformation leader with 10+ years across Samsung Electronics, Apple and global consulting projects — now building
+          Retail operations and transformation leader with 10+ years of experience at Apple and on global retail projects for Samsung Electronics, delivered through consulting and communications partners — now building
           <strong>ShyftStarter</strong>, an AI-powered frontline performance platform. I translate HQ strategy into scalable frontline execution across
           APAC, North America and Europe, spanning global expansion, performance management, leadership enablement and customer experience.
           Currently pursuing an MBA at Seoul National University, combining enterprise operating experience with product strategy,
           AI-enabled performance management and venture building.
         </p>
         <p data-lang="ko">
-          삼성전자, 애플, 글로벌 컨설팅 프로젝트에서 10년 이상 경력을 쌓은 리테일 운영·트랜스포메이션 리더입니다. 현재는 AI 기반 현장 퍼포먼스 플랫폼
+          Apple 근무 경험과, 컨설팅·커뮤니케이션 파트너사 소속으로 수행한 삼성전자 글로벌 리테일 프로젝트를 포함해 10년 이상 경력을 쌓은 리테일 운영·트랜스포메이션 리더입니다. 현재는 AI 기반 현장 퍼포먼스 플랫폼
           <strong>ShyftStarter</strong>를 만들고 있습니다. 아시아태평양, 북미, 유럽에서 본사 전략을 확장 가능한 현장 실행으로 연결해 왔으며,
           글로벌 확장, 성과 관리, 리더십 역량 강화, 고객 경험 전반을 다뤄 왔습니다. 현재 서울대학교 경영전문대학원 MBA 과정에서
           기업 운영 경험을 제품 전략, AI 기반 성과 관리, 벤처 빌딩과 접목하고 있습니다.
@@ -634,7 +638,7 @@
 
         <article class="job">
           <div class="job-top">
-            <h3>People N Communications <span class="where">· <span data-lang="en">Korea (Samsung Electronics HQ)</span><span data-lang="ko">한국 (삼성전자 본사)</span></span></h3>
+            <h3>People N Communications <span class="where">· <span data-lang="en">Korea · Client: Samsung Electronics HQ</span><span data-lang="ko">한국 · 고객사: 삼성전자 본사</span></span></h3>
             <span class="date"><span data-lang="en">Dec 2016 – Oct 2020</span><span data-lang="ko">2016.12 – 2020.10</span></span>
           </div>
           <p class="role"><span data-lang="en">English Presenter / B2B Communication Specialist</span><span data-lang="ko">영어 프레젠터 / B2B 커뮤니케이션 스페셜리스트</span></p>
